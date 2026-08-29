@@ -5,6 +5,18 @@ A comprehensive collection of Natural Language Processing (NLP) tasks focusing o
 
 ---
 
+1. Fork repository
+2. Clone your fork
+3. Complete tasks
+4. Push changes
+5. Ensure GitHub Actions are green
+6. Do not modify:
+   - tests/
+   - .github/workflows/
+7. Submit URL of your fork
+
+---
+
 ## **Setup and Installation**
 
 ### **Prerequisites**

@@ -13,7 +13,7 @@ def calculate_tfidf(texts: List[str]) -> pd.DataFrame:
 
     Returns:
         pd.DataFrame: A DataFrame representing the TF-IDF model,
-                      with words as columns and their TF-IDF scores as values.
+                    with words as columns and their TF-IDF scores as values.
 
     Raises:
         TypeError: If texts is not a list.
@@ -26,7 +26,21 @@ def calculate_tfidf(texts: List[str]) -> pd.DataFrame:
         0  0.000000  0.579739  0.000000  0.579739  0.447214
         1  0.652491  0.000000  0.652491  0.000000  0.385372
     """
-    pass
+
+    if not texts:
+        raise ValueError('Input texts cannot be empty')
+
+    if not isinstance(texts, list):
+        raise TypeError('Input texts must be a list')
+    
+    for sentences in texts:
+        if not isinstance(sentences, str):
+            raise ValueError('All texts must be strings')
+    
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(texts)
+    df = pd.DataFrame(X.toarray(), columns= vectorizer.get_feature_names_out())
+    
     return df
 
 

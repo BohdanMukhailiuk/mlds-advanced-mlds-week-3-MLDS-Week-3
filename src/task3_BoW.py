@@ -13,7 +13,7 @@ def bag_of_words(texts: List[str]) -> pd.DataFrame:
 
     Returns:
         pd.DataFrame: A DataFrame representing the Bag of Words model,
-                      with words as columns and their frequencies as values.
+                    with words as columns and their frequencies as values.
 
     Raises:
         TypeError: If texts is not a list.
@@ -22,11 +22,31 @@ def bag_of_words(texts: List[str]) -> pd.DataFrame:
     Example:
         >>> texts = ["I love NLP", "NLP is fun"]
         >>> bag_of_words(texts)
-           fun  i  is  love  nlp
+            fun  i  is  love  nlp
         0    0  1   0     1    1
         1    1  0   1     0    1
     """
-    pass
+
+    if not texts:
+        raise ValueError('Input texts cannot be empty')
+    
+    '''
+    document_words = [sentencs.split() for sentencs in texts]
+    vocab = sorted(set(sum(document_words, [])))
+    vocab_dict = {k:i for i,k in enumerate(vocab)}
+    '''
+
+    if not isinstance(texts, list):
+        raise TypeError('Input texts must be a list')
+
+    for sentences in texts:
+        if not isinstance(sentences, str):
+            raise ValueError('All texts must be strings')
+    
+    vectorizer = CountVectorizer()
+    X = vectorizer.fit_transform(texts)
+    df= pd.DataFrame(X.toarray(), columns= vectorizer.get_feature_names_out())
+
     return df
 
 

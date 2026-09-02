@@ -12,7 +12,7 @@ def stem_and_lemmatize(tokens: List[str]) -> Dict[str, List[str]]:
 
     Returns:
         Dict[str, List[str]]: A dictionary with 'original', 'stemmed', and 
-                             'lemmatized' token lists.
+                            'lemmatized' token lists.
 
     Raises:
         TypeError: If tokens is not a list.
@@ -21,14 +21,29 @@ def stem_and_lemmatize(tokens: List[str]) -> Dict[str, List[str]]:
     Example:
         >>> stem_and_lemmatize(['running', 'cats'])
         {'original': ['running', 'cats'], 'stemmed': ['run', 'cat'], 
-         'lemmatized': ['running', 'cat']}
+        'lemmatized': ['running', 'cat']}
     """
-    pass
+
+    if not isinstance(tokens, list):
+        raise TypeError('Input tokens must be a list')
+
+    if not tokens:
+        raise ValueError('Input tokens cannot be empty')
+
+    for token in tokens:
+        if not isinstance(token, str):
+            raise ValueError('All tokens must be strings')
+
+    stemmer = PorterStemmer()
+    stemmed_words = [stemmer.stem(word) for word in tokens]
+
+    lemmatizer = WordNetLemmatizer()
+    lemmatized_words = [lemmatizer.lemmatize(word) for word in tokens]
 
     return {
         "original": tokens,
-        "stemmed": stemmed,
-        "lemmatized": lemmatized
+        "stemmed": stemmed_words,
+        "lemmatized": lemmatized_words
     }
 
 

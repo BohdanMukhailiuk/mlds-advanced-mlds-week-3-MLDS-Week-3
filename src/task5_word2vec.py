@@ -33,7 +33,16 @@ def train_word2vec(
         >>> 'nlp' in model.wv
         True
     """
-    pass
+
+    if not isinstance(sentences, list):
+        raise TypeError("Sentences must be a list")
+
+    if not sentences:
+        raise ValueError("Sentences cannot be empty")
+    
+    model = Word2Vec(sentences=sentences, vector_size=vector_size, 
+                    window=window, min_count=min_count, workers=workers)
+
     return model
 
 
@@ -48,7 +57,7 @@ def find_similar_words(model: Word2Vec, word: str, topn: int = 10) -> List[Tuple
 
     Returns:
         List[Tuple[str, float]]: A list of tuples with similar words and their 
-                                 similarity scores.
+                                similarity scores.
 
     Raises:
         KeyError: If the word is not in the model's vocabulary.
@@ -61,7 +70,12 @@ def find_similar_words(model: Word2Vec, word: str, topn: int = 10) -> List[Tuple
         >>> len(similar) <= 2
         True
     """
-    pass
+
+    if not word in model.wv:
+        raise KeyError(f"'{word}' not in vocabulary")
+
+    if not isinstance(model, Word2Vec):
+        raise TypeError("Model is not a valid Word2Vec model")
 
     return model.wv.most_similar(word, topn=topn)
 
